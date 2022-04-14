@@ -1,6 +1,7 @@
 from fileinput import filename
 import streamlit as st
 import pandas as pd
+import plotly.express as px
 
 import resourcecode
 
@@ -27,6 +28,16 @@ longitude = st.sidebar.number_input('Longitude', -10., 10., -4.6, 0.01)
 selected_node = resourcecode.data.get_closest_point(
     latitude=latitude, longitude=longitude
 )[0]
+
+import plotly.express as px
+
+df = pd.DataFrame(latitude=[latitude], longitude=[longitude])
+
+fig = px.scatter_mapbox(df, lat="latitude", lon="longitude", zoom=3, height=300)
+fig.update_layout(mapbox_style="open-street-map")
+fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+fig.show()
+
 
 if st.button("Download dataset"):
     st.write('Download in progress')
