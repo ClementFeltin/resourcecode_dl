@@ -19,7 +19,7 @@ texte = ' '.join(texte)
 
 st.write(texte)
 
-st.write('Vous pouvez consulter le code source de cette application et nous faire part de vos remarques sur [GitHub](https://github.com/ClementFeltin/resourcecode_dl).')
+st.write('The source code is available at [GitHub](https://github.com/ClementFeltin/resourcecode_dl). Feel free to share any issue or idea.')
 
 latitude = st.sidebar.number_input('Latitude', 40., 50., 48.3, 0.01)
 longitude = st.sidebar.number_input('Longitude', -10., 10., -4.6, 0.01)
@@ -71,7 +71,7 @@ if st.button("Download dataset"):
 
 
 else:
-     st.write('Dataset not downloaded yet')
+     st.write('No dataset downloaded yet')
 
 
 
