@@ -31,7 +31,9 @@ selected_node = resourcecode.data.get_closest_point(
 
 import plotly.express as px
 
-df = pd.DataFrame(latitude=[latitude], longitude=[longitude])
+df = pd.DataFrame(list(zip([latitude], [longitude])),
+               columns =['latitude', 'longitude'])
+
 
 fig = px.scatter_mapbox(df, lat="latitude", lon="longitude", zoom=3, height=300)
 fig.update_layout(mapbox_style="open-street-map")
