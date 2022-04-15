@@ -1,2 +1,3 @@
 pandas==1.1.5
 resourcecode
+streamlit_folium

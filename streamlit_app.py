@@ -1,7 +1,9 @@
 from fileinput import filename
 import streamlit as st
 import pandas as pd
-import plotly.express as px
+
+from streamlit_folium import folium_static
+import folium
 
 import resourcecode
 
@@ -29,17 +31,17 @@ selected_node = resourcecode.data.get_closest_point(
     latitude=latitude, longitude=longitude
 )[0]
 
-import plotly.express as px
+# center on Liberty Bell
+m = folium.Map(location=[latitude, longitude], zoom_start=16)
 
-df = pd.DataFrame(list(zip([latitude], [longitude])),
-               columns =['latitude', 'longitude'])
+# add marker for Liberty Bell
+tooltip = "Selected location"
+folium.Marker(
+    [latitude, longitude], popup="Selected location", tooltip=tooltip
+).add_to(m)
 
-
-fig = px.scatter_mapbox(df, lat="latitude", lon="longitude", zoom=3, height=300)
-fig.update_layout(mapbox_style="open-street-map")
-fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
-fig.show()
-
+# call to render Folium map in Streamlit
+folium_static(m)
 
 if st.button("Download dataset"):
     st.write('Download in progress')
