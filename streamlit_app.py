@@ -24,8 +24,10 @@ st.write(texte)
 
 st.write('The source code is available at [GitHub](https://github.com/ClementFeltin/resourcecode_dl). Feel free to share any issue or idea.')
 
-latitude = st.sidebar.number_input('Latitude', 40., 50., 48.3, 0.01)
-longitude = st.sidebar.number_input('Longitude', -10., 10., -4.6, 0.01)
+latitude_default = 48.3
+longitude_default = -4.6
+latitude = st.sidebar.number_input('Latitude', 40., 50., latitude_default, 0.01)
+longitude = st.sidebar.number_input('Longitude', -10., 10., longitude_default, 0.01)
 
 selected_node = resourcecode.data.get_closest_point(
     latitude=latitude, longitude=longitude
@@ -41,6 +43,7 @@ folium.Marker(
 
 # call to render Folium map in Streamlit
 folium_static(m)
+
 
 if st.button("Download dataset"):
     st.write('Download in progress')
