@@ -36,9 +36,9 @@ selected_node = resourcecode.data.get_closest_point(
 # zoom levels https://wiki.openstreetmap.org/wiki/Zoom_levels
 m = folium.Map(location=[latitude, longitude], zoom_start=10)
 
-tooltip = "Selected location"
+tooltip = f"Selected location : node {selected_node}"
 folium.Marker(
-    [latitude, longitude], popup="Selected location", tooltip=tooltip
+    [latitude, longitude], popup=f"node: {selected_node}\nlat: {latitude}\nlon: {longitude}", tooltip=tooltip
 ).add_to(m)
 
 # call to render Folium map in Streamlit
