@@ -31,10 +31,9 @@ selected_node = resourcecode.data.get_closest_point(
     latitude=latitude, longitude=longitude
 )[0]
 
-# center on Liberty Bell
-m = folium.Map(location=[latitude, longitude], zoom_start=16)
+# zoom levels https://wiki.openstreetmap.org/wiki/Zoom_levels
+m = folium.Map(location=[latitude, longitude], zoom_start=10)
 
-# add marker for Liberty Bell
 tooltip = "Selected location"
 folium.Marker(
     [latitude, longitude], popup="Selected location", tooltip=tooltip
