@@ -38,15 +38,15 @@ m = folium.Map(location=[latitude, longitude], zoom_start=10)
 
 tooltip = f"Selected location : node {selected_node}"
 folium.Marker(
-    [latitude, longitude], popup=f"node: {selected_node}\nlat: {latitude}\nlon: {longitude}", tooltip=tooltip
+    [latitude, longitude], popup=f"node:{selected_node}\nlat:{latitude}\nlon:{longitude}", tooltip=tooltip
 ).add_to(m)
 
 # call to render Folium map in Streamlit
 folium_static(m)
 
 
-if st.button("Download dataset"):
-    st.write('Download in progress')
+if st.sidebar.button("Download dataset"):
+    st.sidebar.write('Download in progress')
 
     url = "https://resourcecode.ifremer.fr/explore?pointId=" + str(selected_node)# + "&startDateTime=2010-10-01T22%3A00%3A00.000Z&endDateTime=2012-09-30T22%3A00%3A00.000Z"
 
@@ -78,17 +78,22 @@ if st.button("Download dataset"):
     f"Water depth / CD (m) : {data.depth.mean()}",
     ] + static_header
 
-    file = "test.csv"
+    file_name = "test.csv"
 
-    csv_add_header(header=header,
-                dataframe=data_ws.drop(["depth"], axis=1),
-                filename=file)
+    @st.cache
+    def convert_data(df):
+        # IMPORTANT: Cache the conversion to prevent computation on every rerun
+        csv_add_header(header=header,
+                       dataframe=df,
+                       filename=file_name)
+    
+    convert_data(data_ws.drop(["depth"], axis=1))
 
-    st.download_button("Save as csv", data=file, file_name=f"RSDL {selected_node}")
-
+    with open(file_name, "rb") as file:
+        st.sidebar.download_button("Save as csv", data=file, file_name=f"RSDL {selected_node}.csv")
 
 else:
-     st.write('No dataset downloaded yet')
+     st.sidebar.write('No dataset downloaded yet')
 
 
 
